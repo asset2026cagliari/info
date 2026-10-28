@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ASSET 2026 Cagliari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow column, sticky section bar, canvas-and-ink palette from the tote bag, madder red only for "now" and session codes */
+:root{
+  --bg:#efe9dc; --surface:#f7f3ea; --ink:#3c372f; --muted:#6e675b; --line:#d8cfbd; --accent:#9b3220; --accent-soft:#f1dcd2; --star:#b5761a;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#211e1a; --surface:#2b2722; --ink:#ece5d6; --muted:#a79e8e; --line:#403a32; --accent:#e0795f; --accent-soft:#3d2620; --star:#e2a64a; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#211e1a; --surface:#2b2722; --ink:#ece5d6; --muted:#a79e8e; --line:#403a32; --accent:#e0795f; --accent-soft:#3d2620; --star:#e2a64a; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit;text-decoration-color:var(--accent);text-underline-offset:3px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+header.hero{padding-block:28px 18px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.hero h1{font:700 clamp(30px,8vw,44px)/1 var(--f-display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.hero p{margin:8px 0 0;color:var(--muted);font-size:14px}
+.hero .when{font:500 13px/1.3 var(--f-mono);color:var(--ink);margin-top:12px;letter-spacing:.02em}
+.spiral{width:76px;height:auto;color:var(--ink)}
+
+nav.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.bar .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.bar button{background:none;border:0;padding:12px 10px 10px;font-weight:600;font-size:14px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+nav.bar button[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+
+main{padding-block:18px 64px}
+section[hidden]{display:none}
+h2{font:700 22px/1.2 var(--f-display);margin:8px 0 12px}
+h3{font:600 15px/1.3 var(--f-body);margin:0}
+.label{font:500 11px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+
+/* programme controls */
+.controls{display:grid;gap:10px;margin-bottom:16px}
+.days{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.days button{background:var(--surface);border:0;padding:9px 4px;cursor:pointer;line-height:1.2}
+.days button + button{border-left:1px solid var(--line)}
+.days button b{display:block;font:700 15px var(--f-display)}
+.days button span{font-size:12px;color:var(--muted)}
+.days button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.days button[aria-pressed="true"] span{color:inherit;opacity:.75}
+.searchrow{display:flex;gap:8px}
+.searchrow input{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;color:var(--ink)}
+.toggle{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:0 12px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
+.toggle[aria-pressed="true"]{border-color:var(--star);color:var(--star)}
+
+/* timeline */
+.slot{display:grid;grid-template-columns:58px 1fr;gap:12px;padding-block:10px;border-top:1px solid var(--line)}
+.slot:first-child{border-top:0}
+.slot .time{font:500 13px/1.35 var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted);padding-top:2px}
+.slot.plain .what{font-weight:500}
+.slot.plain .where{color:var(--muted);font-size:13px}
+.slot.highlight .what{font:700 16px/1.3 var(--f-display)}
+.now{display:inline-block;font:500 10px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:var(--bg);padding:4px 6px;border-radius:4px;margin-left:6px;vertical-align:2px}
+.slot.is-now .time{color:var(--accent)}
+.parallel{display:grid;gap:8px;min-width:0}
+.parallel .what{font-weight:600;margin-bottom:2px}
+
+details.sess{background:var(--surface);border:1px solid var(--line);border-radius:10px;min-width:0}
+details.sess.memorial{border-color:var(--ink)}
+details.sess summary{list-style:none;cursor:pointer;padding:10px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline}
+details.sess summary::-webkit-details-marker{display:none}
+.code{font:500 12px/1 var(--f-mono);color:var(--accent);padding-top:2px}
+.st{font-weight:600;line-height:1.3}
+.room{grid-column:2;font:500 12px/1.3 var(--f-mono);color:var(--muted)}
+.chev{grid-column:3;grid-row:1;}
+details.sess[open] summary{border-bottom:1px solid var(--line)}
+.sess-meta{padding:8px 12px 0;font-size:13px;color:var(--muted)}
+ol.papers{list-style:none;margin:0;padding:4px 0 6px}
+ol.papers li{display:grid;grid-template-columns:1fr auto;gap:8px;padding:8px 12px;align-items:start}
+ol.papers li + li{border-top:1px dashed var(--line)}
+.pt{font-weight:500;line-height:1.35}
+.pa{font-size:13px;color:var(--muted);margin-top:2px}
+.pa b{font-weight:600;color:var(--ink)}
+.starbtn{background:none;border:0;cursor:pointer;padding:2px 4px;font-size:18px;line-height:1;color:var(--line)}
+.starbtn[aria-pressed="true"]{color:var(--star)}
+.results{display:grid;gap:8px}
+.result{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:8px}
+.result .where{font:500 12px/1.4 var(--f-mono);color:var(--muted);margin-top:4px}
+.empty{color:var(--muted);padding:12px 0}
+mark{background:var(--accent-soft);color:inherit;border-radius:2px}
+
+/* cards for events / venue / info */
+.stack{display:grid;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px;min-width:0}
+.card .k{font:500 12px/1.3 var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.card p{margin:0}
+.card .sub{color:var(--muted);font-size:14px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;text-decoration:none;background:none;cursor:pointer}
+.copy{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.copy code{font:500 14px var(--f-mono);user-select:all;word-break:break-all}
+.note{font-size:13px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:20px 8px;color:var(--muted);font-size:12.5px}
+@media (prefers-reduced-motion:no-preference){details.sess[open] ol.papers{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="wrap hero">
+  <div>
+    <h1>ASSET 2026</h1>
+    <p>45th Annual Meeting of the Association of Southern European Economic Theorists</p>
+    <div class="when">CAGLIARI · 5–7 NOVEMBER 2026</div>
+  </div>
+  <svg class="spiral" viewBox="185 200 712 772" aria-hidden="true"><path fill="currentColor" d="M 514.5 741.7 L 517.3 690.6 L 518.6 677.3 L 518.8 645.0 L 520.3 613.1 L 521.5 605.4 L 523.8 598.0 L 526.3 593.6 L 529.8 590.3 L 533.9 588.4 L 538.3 587.5 L 542.5 587.3 L 546.8 588.2 L 551.1 589.8 L 553.2 591.1 L 555.2 592.9 L 558.5 597.5 L 560.4 602.7 L 561.6 610.6 L 561.5 643.0 L 562.1 651.4 L 564.1 659.9 L 566.2 665.4 L 569.0 670.9 L 574.6 678.8 L 581.3 685.0 L 585.9 688.0 L 590.4 690.3 L 599.5 693.0 L 606.3 694.0 L 610.7 694.1 L 615.2 693.5 L 622.0 691.9 L 626.6 690.1 L 631.3 687.1 L 635.8 683.0 L 639.8 678.3 L 645.9 668.0 L 651.1 654.8 L 652.9 646.8 L 654.0 638.8 L 655.2 625.3 L 654.8 609.2 L 653.0 593.0 L 651.1 582.2 L 647.5 568.7 L 641.8 552.6 L 635.4 539.0 L 628.8 527.9 L 620.6 516.8 L 612.0 507.4 L 603.3 500.0 L 592.2 492.7 L 581.3 487.3 L 570.3 483.8 L 561.4 482.1 L 548.2 480.9 L 532.8 481.7 L 524.0 482.9 L 510.4 486.1 L 498.6 490.9 L 489.1 496.1 L 477.3 504.3 L 467.6 513.1 L 458.7 523.3 L 451.7 533.8 L 445.8 544.4 L 439.8 557.6 L 436.4 568.0 L 434.1 581.2 L 432.6 594.3 L 431.7 623.4 L 432.5 628.6 L 433.3 628.5 L 433.1 623.4 L 436.6 594.8 L 439.4 582.1 L 443.6 567.3 L 448.5 555.2 L 453.6 545.2 L 459.5 535.1 L 466.7 525.5 L 475.4 516.2 L 484.3 508.6 L 495.5 501.4 L 504.2 497.0 L 515.0 493.1 L 527.8 490.5 L 535.5 489.7 L 550.1 489.2 L 564.5 491.0 L 572.2 493.1 L 582.1 496.8 L 592.2 502.5 L 600.3 508.2 L 608.2 515.5 L 616.2 524.6 L 623.7 535.2 L 629.6 545.5 L 635.1 558.2 L 641.3 576.5 L 643.8 586.6 L 645.8 599.4 L 647.0 612.2 L 647.2 627.7 L 645.9 640.4 L 643.5 652.8 L 638.9 664.7 L 633.4 673.8 L 630.1 677.8 L 626.3 681.2 L 622.7 683.4 L 619.6 684.6 L 610.0 686.3 L 600.9 685.5 L 593.3 683.1 L 585.8 678.6 L 580.4 673.5 L 575.7 666.8 L 571.7 657.3 L 570.1 650.1 L 569.6 642.6 L 569.5 632.1 L 570.3 616.0 L 569.8 607.2 L 568.0 597.7 L 564.5 590.6 L 559.1 584.7 L 555.9 582.5 L 549.7 579.8 L 543.9 578.6 L 537.7 578.5 L 531.8 579.7 L 525.7 582.3 L 522.6 584.5 L 519.7 587.3 L 517.4 590.5 L 514.4 597.0 L 512.0 606.2 L 510.7 617.7 L 509.3 650.1 L 508.9 685.0 L 512.4 741.7 Z M 600.6 642.3 L 603.9 618.6 L 604.7 605.4 L 604.6 594.8 L 603.8 586.7 L 602.1 578.5 L 597.4 567.5 L 592.4 559.2 L 586.4 551.6 L 580.0 545.2 L 573.5 540.1 L 564.7 535.1 L 558.0 532.6 L 548.8 530.3 L 541.8 529.8 L 532.5 530.4 L 523.0 532.5 L 515.8 535.2 L 508.5 539.0 L 501.0 544.3 L 493.4 551.2 L 488.7 556.3 L 482.7 564.1 L 479.5 569.5 L 477.0 575.0 L 473.0 588.6 L 470.1 610.2 L 468.3 631.5 L 466.6 642.0 L 464.7 649.6 L 461.8 657.0 L 459.1 661.8 L 455.5 666.5 L 448.9 672.8 L 444.6 675.6 L 440.3 677.6 L 436.1 678.8 L 429.6 679.9 L 425.3 680.1 L 419.1 679.6 L 415.0 678.8 L 408.8 676.6 L 404.8 674.5 L 400.9 671.7 L 395.4 665.6 L 392.2 660.5 L 389.8 655.5 L 386.9 645.3 L 385.8 637.5 L 385.3 629.7 L 385.4 606.1 L 386.7 590.1 L 388.2 579.7 L 389.8 572.1 L 393.3 559.1 L 396.2 551.6 L 403.0 536.1 L 414.3 515.7 L 428.0 495.3 L 440.4 480.1 L 447.5 472.7 L 454.5 466.3 L 463.8 458.7 L 470.5 453.9 L 486.4 444.8 L 497.6 439.8 L 504.0 437.4 L 512.8 435.0 L 523.8 432.7 L 540.8 431.0 L 553.8 431.2 L 564.5 432.0 L 579.0 434.7 L 593.8 439.7 L 608.6 447.1 L 619.1 454.1 L 631.9 464.5 L 646.8 479.7 L 661.9 498.2 L 671.1 511.7 L 680.3 527.7 L 687.5 543.8 L 691.2 554.6 L 696.6 576.1 L 697.7 584.0 L 699.3 600.1 L 699.4 618.8 L 698.1 640.1 L 696.4 653.4 L 694.9 661.1 L 691.9 674.3 L 686.9 689.8 L 682.0 700.0 L 676.0 710.1 L 670.1 717.5 L 660.9 726.6 L 651.7 733.2 L 642.7 738.0 L 633.6 741.5 L 624.5 744.1 L 613.2 745.7 L 604.0 746.5 L 587.9 746.9 L 576.5 746.5 L 565.1 745.3 L 539.7 745.5 L 511.1 744.4 L 511.0 745.5 L 552.9 752.8 L 578.0 756.4 L 592.4 757.3 L 604.4 757 L 614.1 756.4 L 623.8 755.0 L 631.8 753.2 L 641.8 749.8 L 649.4 746.4 L 657.0 742.1 L 664.9 736.5 L 670.0 732 L 677.4 724.2 L 681.9 718.6 L 687.4 710.0 L 691.7 701.7 L 695.4 693.2 L 698.1 684.8 L 701.0 673.8 L 704.2 657.4 L 706.3 635.3 L 706.8 616.3 L 706.3 602.6 L 703.7 577.8 L 697.6 552.7 L 694.8 544.2 L 690.5 533.1 L 686.6 524.6 L 679.1 510.6 L 672.1 499.4 L 666.1 490.7 L 655.2 476.8 L 646.5 467.1 L 637.8 458.2 L 629.1 450.5 L 620.2 443.6 L 613.3 439.3 L 604.3 434.4 L 595.2 430.3 L 583.9 426.5 L 576.9 424.8 L 567.8 423.3 L 556.5 422.4 L 540.7 422.2 L 522.4 424.2 L 510.9 426.7 L 501.6 429.2 L 485.1 435.9 L 468.4 445.1 L 461.0 450.0 L 453.7 455.6 L 446.4 461.8 L 439 469.0 L 425.1 484.9 L 412.1 503.5 L 401.2 522.1 L 392.5 540.7 L 388.1 551.2 L 385.3 559.3 L 380.9 578.4 L 379.4 589.2 L 377.6 608.1 L 377.4 632.6 L 378 641.0 L 379.3 649.5 L 380.8 655.3 L 383.0 661.3 L 388.1 670.3 L 394.8 678.0 L 399.8 681.8 L 404.9 684.5 L 414.9 687.8 L 420.0 688.6 L 427.7 688.8 L 432.8 688.2 L 440.4 686.5 L 445.6 684.5 L 451.1 681.4 L 456.4 677.2 L 463.6 669.2 L 467.3 663.4 L 471.0 654.8 L 473.3 646.3 L 475.0 635.2 L 476.7 613.4 L 479.3 592.5 L 482.6 579.9 L 487.2 570.4 L 492.3 563.2 L 498.6 556.2 L 505.7 550.0 L 512.5 545.4 L 519.1 542.1 L 525.3 539.8 L 533.6 538.2 L 539.8 537.8 L 545.7 538.1 L 553.5 539.8 L 561.4 542.8 L 567.0 546 L 572.6 550.0 L 578.3 555.3 L 583.9 561.8 L 588.7 569.0 L 592.5 576.5 L 595.4 583.7 L 597.6 590.7 L 599.0 598.0 L 600.2 608.1 L 600.8 621.0 L 599.8 642.2 Z M 413.1 837.2 L 395.6 833.9 L 378.5 829.2 L 352.9 817.7 L 338.1 809.3 L 323.2 798.5 L 314.6 791.1 L 308.3 784.8 L 295.9 770.3 L 285.0 754.3 L 274.5 735.9 L 266.3 717.4 L 259.2 696.3 L 254.8 677.9 L 251.3 654.1 L 250.2 633.4 L 250.5 609.5 L 252.8 577.9 L 255.9 554.7 L 261.3 530.8 L 268.9 504.6 L 274.4 489.1 L 283.8 468.3 L 294.5 447.6 L 305.1 429.3 L 321.1 406.1 L 339.1 383.2 L 361.4 357.9 L 380.2 339.0 L 396.2 324.8 L 409.8 314.3 L 429.9 301.7 L 449.7 291.5 L 469.2 283.2 L 483.9 278.1 L 505.2 273.1 L 515.5 271.5 L 542.6 269.3 L 561.1 269.8 L 581.9 272.0 L 604.6 276.3 L 627.4 283.5 L 639.8 288.4 L 658.3 298.3 L 672.6 307.9 L 689.3 320.4 L 704 332.9 L 716.6 344.8 L 731.5 360.1 L 746.7 377.5 L 764.4 399.6 L 774.0 413.4 L 784.1 429.7 L 797.2 454.5 L 807.4 476.2 L 814.9 495.1 L 820.6 514.1 L 826.0 536.0 L 829.2 552.3 L 833.5 582.0 L 833.5 616.8 L 829.8 667.4 L 826.2 691.1 L 820.4 717.3 L 812.5 743.2 L 804.5 763.9 L 792.7 787.2 L 783.4 802.3 L 772.1 817.5 L 756.8 834.8 L 740.1 850.1 L 723.7 862.6 L 714.3 868.7 L 705.1 874.0 L 691.1 881.1 L 675.2 888.1 L 645.4 898.2 L 634.2 900.8 L 620.3 903.3 L 611.6 904.5 L 600.5 905.1 L 594.1 904.6 L 585.5 902.8 L 579.5 900.0 L 575.4 897.2 L 571.2 893.5 L 567.4 888.8 L 562.6 881.0 L 558.5 870.6 L 556.2 860.1 L 555.1 847.0 L 555.7 839.4 L 558.1 829.4 L 562.0 822.2 L 565.6 818.0 L 570.0 814.5 L 574.5 811.6 L 583.4 807.9 L 594.7 805.5 L 625.0 802.0 L 632.5 800.7 L 649.3 796.0 L 664.0 790.1 L 681.4 781.1 L 688.9 776.1 L 696.6 770.3 L 704.3 763.3 L 709.2 758.1 L 713.7 752.6 L 719.1 744.4 L 728.0 728.3 L 734.1 714.6 L 740.6 695.7 L 744.6 682.2 L 747.3 671.2 L 750.7 649.4 L 751.3 641.0 L 750.2 589.6 L 749.3 578.4 L 746.5 562.0 L 743.8 550.9 L 737.1 528.8 L 727.9 506.4 L 716.7 483.9 L 705.3 464.1 L 693.8 447.1 L 685.1 435.8 L 678.4 428.0 L 665.2 414.6 L 647.6 400.5 L 630.1 389.1 L 610.7 378.9 L 593.1 372.1 L 581.8 368.8 L 566.2 365.7 L 545.9 364.2 L 532.4 365.1 L 525.0 366.1 L 509.2 369.8 L 497.6 373.6 L 477.3 382.2 L 465.7 387.9 L 449.5 397.1 L 437.6 404.7 L 425.4 413.7 L 415.5 422.1 L 405.4 431.4 L 396 441.7 L 387.4 452.3 L 376.0 468.1 L 367.5 481.4 L 361.6 492.0 L 353.5 507.9 L 346.6 524.0 L 341.9 537.6 L 336.5 557.0 L 332.0 592.2 L 330.3 627.4 L 330.8 646.6 L 331.6 655.1 L 334.0 669.2 L 337.1 680.5 L 341.4 692.0 L 346.0 700.8 L 351.8 709.6 L 358.6 717.6 L 363.4 722.0 L 368.2 725.4 L 377.8 730.7 L 398.5 739.5 L 412.9 743.0 L 420.3 744.1 L 454.8 746.9 L 508.9 746.9 L 509.0 745.2 L 483.1 741.8 L 455.7 737.5 L 419.1 733.6 L 408.2 731.3 L 399.7 728.6 L 380.0 719.9 L 373.8 716.4 L 367.7 711.9 L 363.8 708.0 L 359.9 703.3 L 353.0 692.9 L 350.4 687.8 L 347.2 679.9 L 343.1 666.8 L 339.9 648.5 L 339.0 632.6 L 340.0 595.4 L 344.4 558.2 L 350.5 537.3 L 355.2 524.4 L 364.7 503.6 L 376.2 482.9 L 390.1 462.3 L 402.2 447.0 L 413.6 434.8 L 428.1 421.9 L 444.6 409.8 L 460.6 400.1 L 478.5 391.0 L 500.7 381.9 L 513.8 377.8 L 531.1 374.3 L 546.1 373.3 L 565.2 374.5 L 584.1 378.6 L 598.7 383.6 L 613.1 390.2 L 631.8 401.0 L 648.5 412.8 L 656.9 419.7 L 663.3 425.5 L 678.3 441.5 L 692.9 460.5 L 705.1 479.5 L 718.8 504.1 L 728.7 525.7 L 735.5 544.5 L 740.7 563.3 L 743.7 579.3 L 744.2 584.6 L 745.4 614.0 L 745.5 640.9 L 744.4 651.4 L 740.4 672.6 L 733.2 696.2 L 725.0 717.2 L 714.1 737.9 L 705.4 750.6 L 696.4 760.2 L 686.8 768.1 L 674.9 776.0 L 658.4 784.4 L 644.6 789.8 L 628.4 794.4 L 593.9 799.3 L 579.3 802.9 L 571.8 806.4 L 564.3 811.6 L 559.6 816.1 L 555.8 821.5 L 552.1 830.1 L 550 841.2 L 550 852.5 L 551.4 863.6 L 554.4 874.8 L 557.9 883.2 L 563.2 891.7 L 569.7 899.1 L 574.4 902.8 L 581.5 906.6 L 588.7 908.6 L 598.0 909.9 L 616.5 908.9 L 635.1 905.8 L 646.8 903.3 L 679.5 893 L 693.8 887.1 L 708.3 880.2 L 720.4 873.5 L 732.7 865.6 L 742.7 858.2 L 752.7 849.9 L 767.4 835.8 L 778.7 822.9 L 786.8 812.6 L 798.7 794.1 L 811.4 770.3 L 819.6 748.8 L 827.8 722.0 L 834.1 692.6 L 838.2 662.9 L 841.7 619.9 L 842.3 592.8 L 842.1 581.4 L 837.5 551.0 L 834.7 537.0 L 829.1 514.7 L 823.4 495.3 L 815.9 475.8 L 805.9 453.7 L 792.9 428.6 L 786.5 417.3 L 777.3 403.1 L 768.9 391.7 L 748.7 366.9 L 735.3 352.2 L 717.9 334.9 L 702.8 321.4 L 683.5 306.3 L 666.6 294.5 L 655.9 288.2 L 640.9 280.5 L 630.0 276.3 L 608.8 269.4 L 600.1 267.4 L 579.0 263.5 L 562.1 261.7 L 540.6 261.0 L 514.7 263.2 L 503.5 264.9 L 481.7 270.1 L 466.2 275.4 L 446.3 283.9 L 425.9 294.4 L 405.1 307.5 L 391.0 318.4 L 374.5 332.9 L 355.3 352.1 L 332.6 377.9 L 316.3 398.6 L 301.8 419.7 L 293.7 433.2 L 282.2 454.5 L 267.6 486.3 L 262.0 502.3 L 253.2 531.6 L 248.0 552.9 L 244.2 579.7 L 242.0 609.2 L 242.0 636.0 L 243.4 654.9 L 247.9 682.0 L 253.7 703.7 L 261.7 725.5 L 270.7 744.5 L 276.8 755.4 L 283.8 766.5 L 289.5 774.9 L 295.8 783.0 L 304.4 792.7 L 311.0 799.3 L 324.3 810.4 L 333.3 816.6 L 342.3 822.0 L 351.4 826.5 L 358.2 829.2 L 374.6 833.8 L 383.6 835.4 L 413.0 838.0 Z M 593.0 853.4 L 597.9 854.2 L 623.2 852.6 L 646.4 848.9 L 657.9 845.6 L 676.4 838.9 L 692.9 831.0 L 704.8 823.5 L 719.2 811.6 L 733.5 796.5 L 741.5 786.1 L 753.2 767.9 L 763.1 749.7 L 771.1 731.5 L 780.6 705.4 L 784.4 692.3 L 789.0 671.0 L 791.5 649.6 L 792.5 622.7 L 792.6 614.6 L 791.1 582.5 L 787.2 555.2 L 785.1 544.2 L 778.2 516.7 L 770.8 494.6 L 764.1 478 L 756.0 461.3 L 746.1 444.7 L 734.7 428.0 L 717.6 405.7 L 705.0 391.1 L 690.0 376.0 L 674.9 363.0 L 666.1 356.7 L 653.0 348.3 L 627.3 334.3 L 604.1 324.6 L 582.7 318.7 L 559.0 315.4 L 535.0 315.5 L 519.7 317.2 L 510.8 318.9 L 495.3 322.8 L 479.6 327.5 L 466.1 332.4 L 452.4 338.3 L 433.9 348.0 L 410.5 364.1 L 398.5 374.0 L 388.6 383.0 L 369.2 403.4 L 356.4 418.7 L 348.4 429.1 L 327.8 460.4 L 321.7 471.0 L 313.5 486.9 L 303.3 511.2 L 294.8 538.2 L 291.2 554.7 L 287.3 584.4 L 284.8 611.5 L 284.8 638.7 L 286.1 657.8 L 287.9 671.6 L 289.3 680.1 L 292.2 691.3 L 296.0 702.6 L 300.8 714.1 L 306.8 725.5 L 312.2 734.2 L 320.1 745.3 L 326.5 753.1 L 333.3 760.3 L 342.6 768.3 L 349.6 773.2 L 356.9 777.4 L 373.4 784.6 L 380.5 787.0 L 398.9 792.0 L 421.5 797.4 L 432.1 801.2 L 440.2 806.0 L 444.1 809.6 L 447.6 814.2 L 450.3 819.1 L 452.2 824.1 L 454.6 837.0 L 455.2 849.8 L 453.4 862.7 L 450.0 872.8 L 447.6 877.8 L 444.5 882.6 L 438.5 889.0 L 432.0 893.2 L 427.8 894.7 L 423.4 895.6 L 414.6 896.2 L 408.4 895.8 L 397.3 893.9 L 376.9 888.8 L 358.9 883.2 L 339.0 874.9 L 323.7 867.5 L 312.9 860.9 L 302.2 853.3 L 291.7 844.6 L 283.3 836.8 L 272.8 825.6 L 262.0 813.4 L 253.8 802.8 L 242.3 786.7 L 234.0 773.5 L 225.3 757.3 L 221.6 749.4 L 215.5 733.1 L 212.2 722.2 L 208.0 706.0 L 202.1 673.7 L 199.6 646.9 L 199.1 628.4 L 200.3 601.6 L 204.8 551.2 L 212.0 521.8 L 215.9 508.6 L 225.8 479.5 L 233.0 461.2 L 240.5 445.6 L 251.4 425.0 L 265.1 401.6 L 282.2 375.4 L 295.7 357.0 L 310.6 338.9 L 329.3 318.4 L 346.3 301.8 L 362.9 286.9 L 377.0 275.7 L 400.0 259.4 L 413.4 251.0 L 430.8 241.4 L 452.7 231.8 L 472.0 225.1 L 499.3 217.2 L 509.7 215.5 L 528.5 214.2 L 536.7 214.1 L 547.3 214.7 L 576.1 214.6 L 592.4 216.0 L 608.9 219.4 L 623.2 223.0 L 637.7 228.1 L 652.1 233.8 L 666.4 241.0 L 685.2 251.8 L 701.9 262.9 L 712.2 270.5 L 720.4 277.4 L 732.8 288.9 L 749.4 305.4 L 770.6 329.2 L 783.3 345.1 L 793.4 359.0 L 813.8 389.6 L 823.8 406.0 L 831.4 419.7 L 843.5 444.2 L 855.6 474.5 L 864.7 501.8 L 870.8 523.6 L 874.0 540.0 L 880.7 586.2 L 881.6 618.5 L 879.8 680.2 L 877.1 704.3 L 873.4 720.2 L 869.6 733.2 L 856.2 769.8 L 848.3 788.2 L 840.4 803.7 L 828.5 824.2 L 818.1 839.5 L 806.8 854.8 L 794.1 870.2 L 784.9 880.0 L 770.8 893.3 L 759.0 903.0 L 747.1 911.7 L 730.6 922.2 L 711.5 932.7 L 697.5 939.5 L 683.6 945.3 L 671.9 949.1 L 657.9 953.0 L 630.1 957.5 L 609.9 958.7 L 589.5 957.5 L 580.8 955.8 L 572.0 953.5 L 565.8 951.2 L 559.4 948.2 L 553.5 944.5 L 547.2 939.5 L 537.1 928.9 L 527.7 916.2 L 518.8 900.4 L 512.8 884.8 L 510.2 871.9 L 509.3 861.5 L 509.3 845.6 L 511.6 808.1 L 512.0 767.7 L 513.3 744.5 L 512.2 744.3 L 509.1 772.9 L 504.8 842.6 L 504.7 864.3 L 505.5 872.4 L 506.8 880.6 L 510.9 894.2 L 514.3 902.4 L 518.5 910.6 L 527.0 924.3 L 533.0 932.2 L 539.3 939.4 L 550.0 948.8 L 554.5 951.8 L 561.1 955.4 L 572.6 959.8 L 579.5 961.5 L 588.8 963.3 L 612.1 964.5 L 628.5 963.5 L 654.3 959.4 L 673.4 954.4 L 690.1 948.6 L 709.3 940.0 L 728.5 929.8 L 747.9 918.0 L 764.9 905.7 L 781.8 891.2 L 796.3 876.7 L 813.6 855.8 L 830.1 832.6 L 838.2 819.5 L 849.6 798.6 L 854.6 787.9 L 862.2 769.2 L 872.5 740.1 L 877.4 724.0 L 881.7 705.3 L 882.9 696.9 L 884.7 677.9 L 886.4 615.8 L 885.3 583.1 L 878.8 539.3 L 875.6 522.6 L 869.5 500.4 L 860.4 472.8 L 850.9 447.7 L 843.4 430.9 L 831.8 408.8 L 818.5 386.6 L 802.1 361.4 L 785.9 339.0 L 770.7 320.5 L 753.5 301.6 L 734.4 282.9 L 715.5 266.4 L 702.7 257.2 L 687.7 247.6 L 668.7 236.9 L 654.0 229.6 L 637.2 223.0 L 622.6 218.0 L 597.6 212.2 L 588.9 210.8 L 574.2 209.7 L 547.1 209.8 L 532.6 209.0 L 515.6 210.0 L 502.6 211.5 L 489.5 214.7 L 459.8 224.4 L 440.1 232.4 L 422.3 240.9 L 404.4 251.3 L 379.0 268.5 L 362.3 281.1 L 347.7 293.7 L 325.5 314.6 L 308.7 332.5 L 295.4 348.2 L 281.1 366.6 L 271.9 379.9 L 255.2 406.2 L 243.1 427.1 L 227.0 458.5 L 219.4 477.1 L 209.1 506.4 L 204.3 522.7 L 197.6 549.4 L 196.0 563.4 L 193.4 598.3 L 192.4 628.1 L 193.1 647.3 L 195.9 674.6 L 201.9 707.3 L 206.2 723.8 L 209.6 735.0 L 215.8 751.7 L 219.6 760.1 L 228.3 776.7 L 236.7 790.4 L 248.4 806.8 L 256.7 817.7 L 267.6 830.2 L 278.4 841.6 L 287.1 849.8 L 298.0 858.7 L 309.0 866.6 L 320.2 873.4 L 336.1 881.1 L 356.7 889.4 L 375.2 894.9 L 393.6 899.4 L 400.6 900.8 L 412.2 902.3 L 424.2 901.5 L 431.7 899.7 L 436.8 897.4 L 442.1 893.7 L 449.1 886.3 L 452.7 880.8 L 455.4 875.3 L 459.1 864.2 L 460.5 855.8 L 461.3 847.6 L 460.5 833.7 L 458.9 825.3 L 457.2 819.7 L 452.9 811.0 L 448.9 805.6 L 444.3 801.2 L 439.6 798.0 L 434.9 795.5 L 423.3 791.2 L 400.4 785.9 L 382.2 781.0 L 375.5 778.8 L 359.6 772.1 L 352.8 768.2 L 346.1 763.5 L 337.3 756.0 L 330.8 749.3 L 324.7 741.8 L 316.9 730.9 L 311.8 722.6 L 306.0 711.6 L 301.5 700.6 L 297.8 689.6 L 294.5 676.1 L 291.7 654.6 L 290.4 633.1 L 290.3 614.3 L 290.9 603.6 L 294.4 568.9 L 296.5 555.5 L 298.7 544.9 L 302.4 531.6 L 307.4 515.6 L 314.9 497.1 L 321.1 484.0 L 329.6 468.4 L 337.5 455.6 L 349.7 437.7 L 357.0 427.5 L 367.3 414.9 L 385.4 394.7 L 397.7 382.7 L 409.5 372.5 L 418.7 365.3 L 432.4 355.8 L 441.3 350.3 L 452.6 344.3 L 472.6 335.8 L 494.6 328.6 L 518.4 322.9 L 537.6 320.9 L 556.7 321.0 L 567.0 322.1 L 581.8 324.4 L 596.2 328.0 L 604.3 330.7 L 620.8 337.3 L 631.1 342.4 L 648.1 351.6 L 661 359.7 L 669.5 365.7 L 684.2 378.1 L 698.7 392.7 L 713.1 409.4 L 729.8 431.6 L 741.0 448.0 L 750.6 464.2 L 759.9 483.2 L 766.6 499.4 L 773.1 518.2 L 780.4 545.3 L 782.6 556.0 L 786.7 583.0 L 787.9 619.9 L 786.4 649.3 L 784.1 667.6 L 779.0 691.0 L 775.4 703.8 L 765.8 729.5 L 758.0 747.2 L 748.1 765.0 L 736.7 782.8 L 729.0 792.7 L 715.0 807.4 L 705.8 815.1 L 696.6 821.5 L 685.2 827.8 L 671.6 833.6 L 653.4 839.3 L 624.3 846.5 L 597.6 851.5 L 593.5 851.3 Z M 593.0 853.4 "/></svg>
+</header>
+
+<nav class="bar" aria-label="Sections"><div class="wrap" role="tablist">
+  <button role="tab" data-v="programme" aria-selected="true">Programme</button>
+  <button role="tab" data-v="events" aria-selected="false">Keynotes &amp; events</button>
+  <button role="tab" data-v="venue" aria-selected="false">Venue</button>
+  <button role="tab" data-v="info" aria-selected="false">Info</button>
+</div></nav>
+
+<main class="wrap">
+  <section id="v-programme">
+    <div class="controls">
+      <div class="days" role="group" aria-label="Day">
+        <button data-d="thu" aria-pressed="true"><b>Thu 5</b><span>Sessions I–III</span></button>
+        <button data-d="fri" aria-pressed="false"><b>Fri 6</b><span>Sessions IV–VI</span></button>
+        <button data-d="sat" aria-pressed="false"><b>Sat 7</b><span>Session VII</span></button>
+      </div>
+      <div class="searchrow">
+        <input id="q" type="search" placeholder="Search a name, title or room" autocomplete="off" aria-label="Search the programme">
+        <button class="toggle" id="mine" aria-pressed="false">★ My talks</button>
+      </div>
+    </div>
+    <div id="prog"></div>
+  </section>
+
+  <section id="v-events" hidden>
+    <h2>Keynote lectures</h2>
+    <div class="stack">
+      <div class="card"><div class="k">FRI 6 NOV · 17:00–18:30 · B_0.A MAXI AULA (AULA A)</div><h3>Murat Sertel Lecture</h3><p>Francesco Lippi <span class="sub">(LUISS &amp; EIEF)</span></p><p class="sub">Title to be announced</p></div>
+      <div class="card"><div class="k">SAT 7 NOV · 11:30–13:00 · B_0.A MAXI AULA (AULA A)</div><h3>Jean-Jacques Laffont Lecture</h3><p>Massimo Morelli <span class="sub">(Bocconi University)</span></p><p class="sub">Social Structure, State Capacity and Economic Activity</p></div>
+    </div>
+    <h2 style="margin-top:24px">Special session</h2>
+    <div class="stack">
+      <div class="card"><div class="k">THU 5 NOV · 14:30–16:30 · B_0.B (AULA MAGNA G. SOTGIU)</div><h3>In Memory of Xavier Raurich</h3><p class="sub">Opening speech by Carmen Beviá (ASSET President). Chair: Vahagn Jerbashian. Four talks by Jaime Alonso-Carrera, Thomas Seegmuller, Marc Teignier and Vahagn Jerbashian.</p><div class="links"><button class="btn" data-goto="3F">See the talks</button></div></div>
+    </div>
+    <h2 style="margin-top:24px">Social events</h2>
+    <div class="stack">
+      <div class="card"><div class="k">THU 5 NOV · 18:30</div><h3>Welcome reception</h3><p>Obicà, Food Hall, 6th floor, la Rinascente, Via Roma 143</p><p class="sub">About ten minutes on foot from the conference venue, in the Marina quarter.</p><div class="links"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=la+Rinascente+Via+Roma+143+Cagliari" target="_blank" rel="noopener">Open in Maps</a></div></div>
+      <div class="card"><div class="k">FRI 6 NOV · 20:00</div><h3>Social dinner</h3><p>Teatro Lirico di Cagliari, Via Sant'Alenixedda</p><div class="links"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Teatro+Lirico+di+Cagliari" target="_blank" rel="noopener">Open in Maps</a></div></div>
+      <div class="card"><div class="k">SAT 7 NOV · 13:00</div><h3>Farewell lunch</h3><p class="sub">At the conference venue.</p></div>
+    </div>
+  </section>
+
+  <section id="v-venue" hidden>
+    <h2>Conference venue</h2>
+    <div class="stack">
+      <div class="card">
+        <h3>Facoltà di Scienze Economiche, Giuridiche e Politiche</h3>
+        <p>Università di Cagliari<br>Viale Sant'Ignazio da Laconi 76–78, Cagliari</p>
+        <div class="links"><a class="btn" href="https://maps.app.goo.gl/F8LVx4BVtN5DEJ7NA" target="_blank" rel="noopener">Open in Maps</a></div>
+      </div>
+      <div class="card">
+        <div class="label">Rooms</div>
+        <p class="sub">Rooms have new codes; the former names are in brackets.</p>
+        <p>Plenary sessions: <b>B_0.A Maxi Aula</b> (Aula A)</p>
+        <p>Parallel sessions: <b>A_0.B</b> (Aula 11 Baffi), <b>B_0.B</b> (Aula Magna G. Sotgiu), <b>A_1.C</b> (Aula 13 Baffi), <b>A_1.F</b> (Aula 6 Baffi), <b>A_0.C</b> (Aula 11 bis), <b>A_1.L</b> (Aula 10 bis)</p>
+      </div>
+      <div class="card">
+        <div class="label">Getting around</div>
+        <p>The historic centre (Castello, Marina, Villanova) is walkable. City buses and the light rail are run by CTM; taxis are available in the centre.</p>
+        <p class="sub">From the airport (CAG), trains and buses reach the city centre and the port area, where the train station and the main bus terminal are.</p>
+        <div class="links"><a class="btn" href="https://www.ctmcagliari.it/en/" target="_blank" rel="noopener">CTM buses</a><a class="btn" href="https://www.sogaer.it/en/to-from-airport" target="_blank" rel="noopener">Airport transfers</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-info" hidden>
+    <h2>Practical info</h2>
+    <div class="stack">
+      <div class="card">
+        <div class="label">Wifi</div>
+        <p>Network name and password will be posted here before the conference.</p>
+      </div>
+      <div class="card">
+        <div class="label">Contact the organisers</div>
+        <div class="copy"><code id="mail">crenos.asset2026@gmail.com</code><button class="btn" data-copy="mail">Copy</button></div>
+        <p class="sub">Registration and administrative issues: CRENoS, Via San Giorgio 12, Cagliari · Tel. +39 070 675 6397</p>
+      </div>
+      <div class="card">
+        <div class="label">Format</div>
+        <p>135 presentations in 41 sessions, six parallel rooms. Each presentation has 30 minutes.</p>
+      </div>
+      <div class="card">
+        <div class="label">Organised by</div>
+        <p class="sub">CRENoS, Università di Cagliari and Università di Sassari. Local organising committee: Luca Deidda (Chair), Gianfranco Atzeni, Fabio Cerina, Michela Cordeddu, Marta Foddi, Anna Maria Pinna, Giommaria Spano, Maria Chiara Tedde.</p>
+        <div class="links"><a class="btn" href="https://crenoslef.wixsite.com/asset-2026" target="_blank" rel="noopener">Conference website</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="wrap">ASSET 2026 · Cagliari · Tap ★ next to a talk to keep it in “My talks” on this phone.</footer>
+
+<script>
+const DATA = `
+@1A|thu|9:30|11:00|Aula 11 Baffi|Cooperative Game Theory|Markel Epelde
+Multichoice games and restricted cooperation|M. Josune Albizuri|University of the Basque Country|Satoshi Masuya, José M. Zarzuelo
+Time Flies: Cooperation in Repeated Finite Time-Horizon Games|Petros Sekeris|TBS Education|Guillaume Cheikbossian, Debrah Meloso
+A value on restricted cooperative games with a priori coalition structures|Markel Epelde|University of the Basque Country|M. J. Albizuri, P. Santa
+@1B|thu|9:30|11:00|Aula Magna G. Sotgiu|Contracts & Information 1|Stefano Bolatto
+Long-Term Procurement Contracts with Persistent Private Information|Luca Di Corato|Università Ca' Foscari Venezia|Michele Moretto
+Endogenous Information Acquisition in an Investment-Trading Game|Pasqualina Arca|Università di Sassari|Evangelos Litos, Anastasia Papadopoulou
+Weak Ties, Asymmetric Information and Agency Contract Design in Relational Networks|Stefano Bolatto|Università di Bologna|Elias Carroni
+@1C|thu|9:30|11:00|Aula 13 Baffi|Game Theory|Cyril Rouault
+The Timing of Political Pledges|Jesus Sanchez-Ibrahim|Universität Hamburg|Anke Gerber
+Bounded Punishment in Community Enforcement|Andrea Benso|Università di Firenze|Alessandro Gioffré
+Quotas and Reserves in Job Matching|Cyril Rouault|Université d'Angers|
+@1D|thu|9:30|11:00|Aula 6 Baffi|Market Design 1|Allen Magsino
+Grade-Based Priority in Course Allocation|Sanae Ben-Mansour|Mohammed VI Polytechnic University|Alexey Kushnir, Antonio Romero Medina, Raquel Carrasco Perea
+Fair division meets humanitarian logistics: Relief aid allocation in transportation networks|Özgür Yilmaz|Koç University|Omer Faruk Sahin, Murat Yilmaz
+Screening in a Priority-Based Assignment Problem|Allen Magsino|European University Institute|
+@1E|thu|9:30|11:00|Aula 11 bis|Behavioral & Experimental 1|Mariachiara Tedde
+Prizes versus Bid Preferences in Innovation Procurement|Stefano Galavotti|Università di Bari|Luca Corazzini, Milos Fisar, Martin Stachon
+Financial Literacy and “Buy Now, Pay Later”. Evidence from U.S. Households|Simone Nobili|Universitas Mercatorum|Giommaria Spano
+Lucky Guesses, Unlucky Trades: MiFID Tests, Financial Literacy, and Investors' Trading Behavior|Mariachiara Tedde|Università di Sassari|
+@1F|thu|9:30|11:00|Aula 10 bis|Growth & Structural Change 1|Tanguy Le Fur
+Directed R&D Subsidies|Ryo Horii|Osaka University|Gregory Casey
+Does Risk Shape Economies? Income Volatility and Structural Change|Andrea Mottola|Università di Cagliari|Alessio Moro, Fenicia Cossu
+Is Inequality Inevitable? Trajectories of Development in Early Agricultural Societies|Tanguy Le Fur|Université de Lille|Pablo Hernandez-Lagos
+@2A|thu|11:30|13:00|Aula 11 Baffi|Labor & Demography 1|Elena Mattana
+Words at Work: Remote Job Postings and Gender Segregation in the Post-Pandemic Labor Market|Elisa Dienesch|Università di Cagliari|Hugues Champeaux, Simone Nobili
+Intra-household Allocation, Care Burdens, and Women's Labor Force Participation in Morocco|Dorothee Boccanfuso|Mohammed VI Polytechnic University|Touhami Abdelkhalek
+The Option Value of Location: How Mobility Shapes the Wage Returns to Labor Market Access|Elena Mattana|Aarhus University|Kerstin Holzheu
+@2B|thu|11:30|13:00|Aula Magna G. Sotgiu|Development|Mehdi Bartal
+From Womb to School Age: Early-Childhood Intervention and Human Capital Formation|Gabriel Romero Ciavatto|Universitat de les Illes Balears|Marisa Hidalgo-Hidalgo
+Entrepreneurial Human Capital and Firm Informality|Luis Franjo|Universidad de Alicante|Adilya Abdrazakova, Francesco Turino
+Demand-Driven Formalization|Mehdi Bartal|Mohammed VI Polytechnic University|Yvan Becard
+@2C|thu|11:30|13:00|Aula 13 Baffi|Fiscal Policy and the Open Economy|Esteban Jaimovich
+Wealth Distribution in the Perpetual Youth Model|Mikhail Pakhnin|Universitat de les Illes Balears|Stéphane Bouché
+Sovereign Defaults At Home and Abroad|Aitor Erce|Universidad Pública de Navarra|Enrico Mallucci, Mattia Picarelli
+Air or Sea? Quality-Driven Sorting in International Trade|Esteban Jaimovich|Università di Torino|Vincenzo Merella
+@2D|thu|11:30|13:00|Aula 6 Baffi|Game Theory and Strategic Behaviour|Guillaume Cheikbossian
+The structure of strategy-proof rules|Jorge Alcalde-Unzu|Universidad Pública de Navarra|Marc Vorsatz
+Predicting Predictions: Strategic Forecast|Carmen Beviá|Universidad de Alicante|Luis C. Corchón
+Costly Signaling, Social Preferences, and Endogenous Assortativity|Guillaume Cheikbossian|Université de Montpellier|Teyssier, Varaine
+@2E|thu|11:30|13:00|Aula 11 bis|Political Economy 1|Jesus Sanchez-Ibrahim
+Optimizing Migration Quotas: Per Capita GDP, Industry Allocation and Voter Preferences|Bernardo Moreno|Universidad de Málaga|Carmen Beviá, David Medina
+Social Media Exposure and the Size of the Welfare State|Angel Solano Garcia|Universidad de Granada|Guadalupe Correa
+Networks and Social Capital after Conflict|Jesus Sanchez-Ibrahim|Universität Hamburg|Gema Lax-Martínez, Carlos Victoria-Lanzón
+@2F|thu|11:30|13:00|Aula 10 bis|Contracts & Information 2|Ole Jann
+Multi-dimensional screening and non-linear pricing with non-separable costs|Nadia Burani|Università di Bologna|
+May Employers Exploit Parental Love? Altruism, Dependents, and Optimal Contracts under Moral Hazard|Cécile Aubert|Université de Bordeaux|
+Manufactured Ignorance: Strategic Fragmentation in Competitive News Markets|Ole Jann|CERGE-EI|Christoph Schottmüller
+@3A|thu|14:30|16:30|Aula 11 Baffi|Networks and Collective Decisions|Pietro Dindo
+The Strategic Effects of Network Tightness|Sofía Ruiz-Palazuelos|Universidad Pública de Navarra|
+A Network Perspective on Consensus Diplomacy in International Climate Negotiations|June Silva|University of the Basque Country|Norma Olaizola
+A theory of equitable governance: inclusive majority rule|Marin Gohard|Université Marie et Louis Pasteur|Rodrigue Tido Takeng, Roland Pongou
+On The Long-Run Accuracy of Prediction Markets|Pietro Dindo|Università Ca' Foscari Venezia|Pablo Beker
+@3B|thu|14:30|16:30|Aula 13 Baffi|Environment & Climate 1|Stefan Niemann
+Strategic Fossil Expansion and the Timing of the Energy Transition|Fabien Prieur|Université de Montpellier|
+Economic development in an environmental growth model with emerging and re-emerging infectious diseases|Luca Gori|Università di Pisa|Raouf Boucekkine, Mauro Sodini
+Supranational climate policy with present-biased policymakers|Stefan Niemann|University of Konstanz|Paul Pichler
+@3C|thu|14:30|16:30|Aula 6 Baffi|Econometrics & Methods|Carlos Cueva
+Modelling House Price Dynamics in Greece|Anastasia Theofilakou|Bank of Greece|Dimitris Karamanis, Dimitrios P. Louzis, Evangelia Papapetrou
+AIC for many-regressor heteroskedastic regressions|Stanislav Anatolyev|CERGE-EI|
+Can LLMs Mimic Household Surveys? From Representative Agents to Population Distributions|Ami Dalloul|University of Duisburg-Essen|Moritz Pfeifer
+Theory as Data Compression|Carlos Cueva|Universidad de Alicante|
+@3D|thu|14:30|16:30|Aula 11 bis|Health & Education|Izabela Jelovac
+More Channels, Lower Scores: Entertainment Television and Student Achievement|Andrea Caria|Università di Cagliari|Dimitri Paolini, Daniele Checchi, Paolo Pinotti
+Who Gets In? Prices, Preferences and Selective University Programs|Iñigo Iturbe-Ormaetxe|Universidad de Alicante|Pedro Albarrán, Marisa Hidalgo-Hidalgo
+Behavioral Biases in Health Choices: Prevention and Cure|Izabela Jelovac|CNRS|Inés Macho-Stadler, David Pérez-Castrillo
+@3E|thu|14:30|16:30|Aula 10 bis|Industrial Organization 1|Juan Manuel Sánchez-Cartas
+Common Ownership, Innovation and the Labor Market|Konstantinos Papadopoulos|Aristotle University of Thessaloniki|Luca G. Deidda, Marco Delogu
+Non-monotonic entry dynamics in oligopoly with common ownership|Dimitrios Zormpas|University of Macedonia|Domenico de Giovanni, Richard Ruble
+Economic and Environmental Implications of Strategic Resale Models in the Circular Economy|Claudia Ranocchia|Tilburg University|Francisco J. André, Carmen Arguedas, Sandra Rousseau
+Identification through pricing|Juan Manuel Sánchez-Cartas|Universidad Complutense de Madrid|
+@3F|thu|14:30|16:30|Aula Magna G. Sotgiu|Special Session in Memory of Xavier Raurich|Vahagn Jerbashian|Opening speech: Carmen Beviá (ASSET President)
+How Commodity Search Frictions Shape Sectoral Allocations|Jaime Alonso-Carrera|Universidade de Vigo|Stéphane Bouché, Xavier Raurich
+Inequality in the Bubble Economy: Who Gains, Who Loses?|Thomas Seegmuller|Aix-Marseille University|Xavier Raurich
+Family Labor Market Decisions and Statistical Gender Discrimination|Marc Teignier|Universitat de Barcelona|David Cuberes, Sevi Rodriguez-Mora, Ludo Visschers
+Demographic Transition, Aggregate Productivity Growth Slowdown, and Structural Change|Vahagn Jerbashian|Universitat de Barcelona|Wilma Ticona-Huanca
+@4A|fri|9:30|11:00|Aula 11 Baffi|Labor & Demography 2|Elias Carroni
+Fertility: the impact of social norms after forced migration|Riccardo Franceschin|Sabancı University|Abdurrahman Aydemir, Giacomo Battiston, Asli Ebru Sanliturk
+Endogenous Fertility and Retirement Age|Marco Delogu|Università di Sassari|Daniele Angelini, William Addessi
+Fertility and inequality within the family|Elias Carroni|Università di Cagliari|Giovanni Prarolo
+@4B|fri|9:30|11:00|Aula Magna G. Sotgiu|Labor & Demography 3|Giacomo Pasini
+Aging, Innovation, and Skilled Emigration|Daniele Angelini|University of Vienna|Filippo Boeri
+Scholars and the Machine: On Automation and Academic Performance|Alessio Garau|Università di Cagliari|Alessio Moro, Margo G. Nieddu
+Marrying after the Unilateral Divorce Law: Long-run Effects on Later-life Cognition|Giacomo Pasini|Università Ca' Foscari Venezia|Viola Angelini, Marco Bertoni, Danilo Cavapozzi, Maha Gasim
+@4C|fri|9:30|11:00|Aula 13 Baffi|Growth & Structural Change 2|Stéphane Bouché
+Common Ownership, Managerial Delegation, and Growth: A Theoretical and Quantitative Analysis|Maurizio Iacopetta|SKEMA Business School|
+Common Ownership, Knowledge Diffusion, and Long-Run Growth|Antonio Minniti|Università di Bologna|Maurizio Iacopetta
+Endogenous population growth and saving rate dynamics|Stéphane Bouché|Universitat de les Illes Balears|Jaime Alonso-Carrera
+@4D|fri|9:30|11:00|Aula 6 Baffi|Political Economy 2|Luis Corchón
+The shadow of Rome: Fascism, nation building and the political legacy of history|Fabio Mariani|UCLouvain|Andrea Caria
+Legislative bargaining with heterogeneous patient players|Daniel Cardona|Universitat de les Illes Balears|Clara Ponsatí
+To lie or not to lie. This is the question|Luis Corchón|Universidad Carlos III de Madrid|Guadalupe Correa-Lopera, Bernardo Moreno
+@4E|fri|9:30|11:00|Aula 11 bis|Networks|Norma Olaizola
+AI Contagion in Social Networks|Olivier Bos|ENS Paris-Saclay|Stefano Bosi
+The Horizontal Geometry of Production Networks|Valerio Dionisi|Università di Milano-Bicocca|
+Tariffs in Networked Markets: Propagation, Welfare and Warfare|Norma Olaizola|University of the Basque Country|Alba Ochoa
+@4F|fri|9:30|11:00|Aula 10 bis|Behavioral & Experimental 2|Ester Manna
+Conservative Learning Under Rainfall Uncertainty: Evidence from Ethiopian Farmers|Hayat Zouiten|Mohammed VI Polytechnic University|Mohammed Abdellaoui, Thomas Epper, Emmanuel Kemel
+Does AI Mitigate the Gender Gap in Competition? Experimental Evidence|Federico Atzori|Università di Cagliari|Luca Corazzini, Valeria Maggian, Filippo Pavesi, Massimo Scotti
+Project Choice and Social Image Concerns|Ester Manna|Universitat de Barcelona|Claudia Cerrone, Alessandro De Chiara, Theodoros Saroglou
+@5A|fri|11:30|13:00|Aula 11 Baffi|Labour Markets and Inequality|Luiz Brotherhood
+Population aging and fiscal multipliers|Florian von Muschwitz|WZB Berlin|
+The Anatomy of Polarization: Evidence from Worker Flows|Fabio Cerina|Università di Cagliari|Elisa Dienesch, Alexander Monge-Naranjo, Alessio Moro
+Minimum Wages, Inequality, and the Informal Sector|Luiz Brotherhood|Universitat de Barcelona|Rafael Machado Parente, Felipe S. Iachan
+@5B|fri|11:30|13:00|Aula Magna G. Sotgiu|Behavioral & Experimental 3|Marie-Louise Vierø
+Individual vs Collective Climate Action: Evidence from a Nationwide Survey Experiment in Italy|Alessandro Tavoni|Università di Bologna|Adria Bronchal, Viola Maone, Riccardo Ghidoni
+Sleeping Newcomb|John Cremin|Aix-Marseille University|
+Dynamic Willpower|Marie-Louise Vierø|Aarhus University|Simon Grant, Meng-Yu Liang
+@5C|fri|11:30|13:00|Aula 13 Baffi|Labour, Health and Well-being|Silvia Balia
+How Place-Based Child Allowances Shape Fertility and Parents' Labour Supply|Marco Delogu|Università di Sassari|Andrea Caria, Maria De Paola, Giambattista Salinari
+Physician Prescribing Style and the Economic Cost of Hospitalizations|Flavia Cavallini|Università della Svizzera italiana|P. Bakx, K. Hek, F. Mazzonna
+Workers Beliefs about Benefits and Costs of Meaningful Work|Silvia Balia|Università di Cagliari|Fabio Angei, Rinaldo Brau, Giovanni Sulis
+@5D|fri|11:30|13:00|Aula 6 Baffi|Environment & Climate 2|Andrei Kalk
+International Environmental Agreements with Minimum Participation Thresholds|Eftichios Sartzetakis|University of Macedonia|G. Deltas
+Culture, Supply Chain and Sustainable Food Consumption|Paolo Melindi-Ghidi|Aix-Marseille University|Giorgio Fabbri
+Carbon Budget Depletion in a Heterogeneous World|Andrei Kalk|University of Klagenfurt|Mikhail Pakhnin
+@5E|fri|11:30|13:00|Aula 11 bis|Market Design 2|Antonio Nicolò
+School Choice with Unobservable Matchings|Ana Mauleon|UCLouvain|
+Matching with Enemies|Vincent Vannetelbosch|UCLouvain|Ata Atay, Ana Mauleon
+Rationalizable Conjectures in Dynamic Matching|Antonio Nicolò|Università di Padova|Riccardo Saulle, Pietro Salmaso
+@5F|fri|11:30|13:00|Aula 10 bis|Industrial Organization 2|Arthur Fishman
+Industrial Policy and Competition: Equity Injections in the European Airline Industry|Albert Banal-Estanol|Universitat Pompeu Fabra|Christina Stadler, Jo Seldeslachts, Wolfgang Grimme, Sven Maertens
+More Quality Criteria, Fewer Bidders in Scoring Auctions|Pavel Andreyanov|HSE University, Moscow|Andrea Bafundi, Riccardo Camboni, Paola Valbonesi
+Advertising for Dropout Customers|Arthur Fishman|Bar-Ilan University|Ronen Gradwohl, Dmitri Lubensky
+@6A|fri|14:30|16:30|Aula 11 Baffi|Banking & Finance|Dimitris Papageorgiou
+Ex Machina: Financial Stability in the Age of AI|Ettore Panetti|Università di Napoli Federico II|Kartik Anand, Sophia Kazinnik, Agnese Leonello
+Loan defaults, firms' dynamics and economic activity|Miguel Casares|Universidad Pública de Navarra|Luca Deidda, José-Enrique Galdón-Sánchez
+Financial Structure Cycles|Giommaria Spano|Universidad de Salamanca|Luca Deidda, Bassam Fattouh
+To be or not to be in Banking Union|Dimitris Papageorgiou|Bank of Greece|Harris Dellas
+@6B|fri|14:30|16:30|Aula Magna G. Sotgiu|Growth, Finance and Structural Change|Burak Ünveren
+Skill-biased stagnation: financial frictions, intangible capital and the returns to human capital|Alejandro Vicente|Universidad de Alicante|
+Migration and Intellectual Property Rights Protection|Ignat Stepanok|Institute for Employment Research (IAB)|
+Complex organizations, leverage and interest rates|Luca Regis|Università di Torino|G. Nicodano
+Automation and Involuntary Unemployment|Burak Ünveren|Yıldız Technical University|Ünal E. Zenginobuz
+@6C|fri|14:30|16:30|Aula 13 Baffi|Monetary Policy and Macroeconomic Fluctuations|Vanghelis Vassilatos
+Stabilizing Taylor Rules and Global Instability in a New Keynesian Model with Heterogeneous Consumption Risk|Giovanni Bella|Università di Cagliari|William A. Barnett, Taniya Ghosh, Paolo Mattana, Beatrice Venturi
+Degree of openness and macroeconomic volatility|Leonor Modesto|Universidade Católica Portuguesa|Antoine Le Riche
+Oil price uncertainty and euro area inflation|Rebeca Jiménez-Rodríguez|Universidad de Salamanca|César Castro
+@6D|fri|14:30|16:30|Aula 6 Baffi|General Equilibrium & Social Choice|Giorgio Fabbri
+Value and competitive allocations|Emma Moreno-García|Universidad de Salamanca|Marta Faias, Mario Pàscoa, Jaime Velasco-Sánchez
+Social acceptability of scoring rules under asymmetric thresholds|Mostapha Diss|Université Marie et Louis Pasteur|Salma Larabi, Bertrand Tchancho
+Should robots pay for our pensions?|Johan Gustafsson|Umeå University|Gauthier Lanot, Florian von Muschwitz
+How memory and habits shape economic insecurity|Giorgio Fabbri|Université Grenoble Alpes|Emmanuelle Augeraud-Véron
+@6E|fri|14:30|16:30|Aula 11 bis|Behavioral & Experimental 4|Vassili Vergopoulos
+Robust Matching Probabilities: The Bewley Reliability Rule|Lorenzo Bastianello|Università Ca' Foscari Venezia; Université Paris-Panthéon-Assas|José Heleno Faro
+Beyond the Contract: Fairness, Observability, and Discretionary Effort|Anastasia Papadopoulou|University of Bristol|Mathilde L. E. Bechdolf, Simon D. Halliday, Eugene Malthouse
+Agreement and Trade beyond Bayesian Rationality|Vassili Vergopoulos|Université Paris Panthéon-Assas|
+@6F|fri|14:30|16:30|Aula 10 bis|Political Economy 3|Marco Rosso
+Electoral Competition and Women's Party Leadership: The Case of French Municipalities|Mara Vidali|Université de Rennes|Benoit Le Maux, Pauline Mille
+The Rise of Referendums|Andrea Mattozzi|Università di Bologna|Guadalupe Correa-Lopera, Antonio Nicolò
+Fact-Finding in Groups|Boris Ginzburg|Universidad Carlos III de Madrid|Philipp Denter
+The Tipping Point of Temptation: Corruption and Selection into Public Service|Marco Rosso|Università di Cagliari|
+@7A|sat|9:00|11:00|Aula 11 Baffi|Public Economics|Annalisa Luporini
+Tax Consent and Wasteful Government Spending|Emmanuelle Taugourdeau|ENSAE Paris|Pierre Boyer, Bertrand Garbinti, Thibault Ingrand
+Artificial Intelligence and Support for Labor Market Policies: Evidence from a Survey Experiment|Giovanni Sulis|Università di Cagliari|Fabio Angei, Silvia Balia, Rinaldo Brau
+Do indirect taxes crowd out donations for public goods?|Marta Faias|NOVA University Lisbon|Emma Moreno-García
+Optimal immigration policy in the face of potential radicalization|Annalisa Luporini|Università di Firenze|Alessandro Cigno, Alessandro Gioffré
+@7B|sat|9:00|11:00|Aula Magna G. Sotgiu|Finance, Debt and Uncertainty|Stylianos Fountas
+Household Macroprudential Policies, Corporate Credit, and Resilience to Macro Shocks|Inci Gumus|Sabancı University|Tumer Kapan, Camelia Minoiu, Cihan Yalcin
+Selection and survival in a general equilibrium model with wisely ignorant agents|Giulio Bottazzi|Sant'Anna School of Advanced Studies, Pisa|Angelo Di Carlo, Daniele Giachini
+Debt sustainability is not only about how much|Touhami Abdelkhalek|Mohammed VI Polytechnic University|Dorothee Boccanfuso
+Economic Uncertainty & the Distributional Effects: The Channels of Influence|Stylianos Fountas|University of Macedonia|Don Bredin, Paraskevi Tzika
+@7C|sat|9:00|11:00|Aula 13 Baffi|Information, Contracts and Persuasion|Pietro Dall'ara
+Bidding under coarse information|Fabio Michelucci|Università Ca' Foscari Venezia|Marco LiCalzi
+Contracting under Ambiguity: A Robust Linear Approach|Martin Dumav|Universidad Carlos III de Madrid|Urmee Khan
+Forgery in the art market: a model of strategic fraud under uncertain authenticity|Lorenzo Zirulia|Università di Milano|Francesco Angelini, Massimiliano Castellani
+Persuading an inattentive and privately informed receiver|Pietro Dall'ara|Università di Napoli Federico II|
+@7D|sat|9:00|11:00|Aula 6 Baffi|Applied Microeconomics|Abdelmonaim Tlidi
+Persistence in Demand Fluctuations and Tacit Collusion: Experimental Evidence|Efthymios Lykopoulos|University of Limassol|Nikolas Tsakas
+Standards and Technology Innovation with Search|Santiago Rubio|Universitat de València|Lluís Granero
+A Quota-Based Analysis of Null Players with Positive Power in Weighted Voting Games|Abdelmonaim Tlidi|Université Abdelmalek Essaâdi|Mostapha Diss, Eric Kamwa
+@7E|sat|9:00|11:00|Aula 11 bis|Macroeconomics, Housing and Monetary Policy|Andreas Westermark
+Inflation expectations and household spending: Different patterns in low and high-inflation settings|Bernardo Candia|Federal Reserve Bank of Cleveland|
+Innovation and Monetary Policy during the Green Transition|Lorant Kaszab|Magyar Nemzeti Bank|Tamas Szoke
+Housing Costs, Tenure, and Household Financial Fragility|Carlos Aller|Universidad de Granada|Ana I. Moro-Egido
+The Housing Channels of Monetary Policy|Andreas Westermark|Sveriges Riksbank|Daria Finocchiaro, Ettore Savoia, Karl Walentin
+`;
+
+// Day agenda; "P" rows are parallel slots filled from DATA
+const AGENDA = {
+  thu:{date:"2026-11-05",rows:[
+    ["9:00","9:30","Registration and opening",""],
+    ["9:30","11:00","P","Parallel Sessions I"],
+    ["11:00","11:30","Coffee break",""],
+    ["11:30","13:00","P","Parallel Sessions II"],
+    ["13:00","14:30","Lunch",""],
+    ["14:30","16:30","P","Parallel Sessions III"],
+    ["18:30","","Welcome reception","Obicà, la Rinascente (6th floor), Via Roma 143","hl"]]},
+  fri:{date:"2026-11-06",rows:[
+    ["9:30","11:00","P","Parallel Sessions IV"],
+    ["11:00","11:30","Coffee break",""],
+    ["11:30","13:00","P","Parallel Sessions V"],
+    ["13:00","14:30","Lunch",""],
+    ["14:30","16:30","P","Parallel Sessions VI"],
+    ["16:30","17:00","Coffee break",""],
+    ["17:00","18:30","Murat Sertel Lecture: Francesco Lippi","Plenary · B_0.A Maxi Aula (Aula A)","hl"],
+    ["20:00","","Social dinner","Teatro Lirico di Cagliari","hl"]]},
+  sat:{date:"2026-11-07",rows:[
+    ["9:00","11:00","P","Parallel Sessions VII"],
+    ["11:00","11:30","Coffee break",""],
+    ["11:30","13:00","Jean-Jacques Laffont Lecture: Massimo Morelli","Plenary · B_0.A Maxi Aula (Aula A)","hl"],
+    ["13:00","","Farewell lunch",""]]}
+};
+const DAYLABEL={thu:"Thu 5 Nov",fri:"Fri 6 Nov",sat:"Sat 7 Nov"};
+
+const ROOMS={"Aula 11 Baffi":"A_0.B","Aula Magna G. Sotgiu":"B_0.B","Aula 13 Baffi":"A_1.C","Aula 6 Baffi":"A_1.F","Aula 11 bis":"A_0.C","Aula 10 bis":"A_1.L"};
+const sessions=[]; let cur=null;
+DATA.trim().split("\n").forEach(l=>{
+  if(l.startsWith("@")){const [code,day,s,e,room,title,chair,note]=l.slice(1).split("|");cur={code,day,s,e,room:(ROOMS[room]?ROOMS[room]+" ("+room+")":room),title,chair,note:note||"",papers:[]};sessions.push(cur);}
+  else{const [t,p,a,co]=l.split("|");cur.papers.push({id:cur.code+"-"+(cur.papers.length+1),t,p,a,co:co||""});}
+});
+
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let stars=new Set(); try{stars=new Set(JSON.parse(localStorage.getItem("asset26-stars")||"[]"))}catch(e){}
+const saveStars=()=>{try{localStorage.setItem("asset26-stars",JSON.stringify([...stars]))}catch(e){}};
+
+// Current time in Cagliari, to mark what is on now
+function romeNow(){const f=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());const g=t=>f.find(x=>x.type===t).value;return {date:`${g("year")}-${g("month")}-${g("day")}`,min:+g("hour")*60+ +g("minute")}}
+const toMin=t=>{if(!t)return null;const [h,m]=t.split(":");return h*60+ +m};
+const now=romeNow();
+let day=Object.keys(AGENDA).find(d=>AGENDA[d].date===now.date)||"thu";
+
+const prog=document.getElementById("prog"), q=document.getElementById("q"), mineBtn=document.getElementById("mine");
+let openSet=new Set();
+
+function paperHTML(p,hl){
+  const H=s=>hl?hl(esc(s)):esc(s);
+  return `<li><div><div class="pt">${H(p.t)}</div><div class="pa"><b>${H(p.p)}</b> (${H(p.a)})${p.co?", "+H(p.co):""}</div></div>
+  <button class="starbtn" data-star="${p.id}" aria-pressed="${stars.has(p.id)}" aria-label="Add to my talks">★</button></li>`;
+}
+function sessHTML(s){
+  return `<details class="sess${s.code==="3F"?" memorial":""}" data-code="${s.code}"${openSet.has(s.code)?" open":""}>
+  <summary><span class="code">${s.code}</span><span class="st">${esc(s.title)}</span><span class="room">${esc(s.room)}</span></summary>
+  <div class="sess-meta">${s.note?esc(s.note)+" · ":""}Chair: ${esc(s.chair)}</div>
+  <ol class="papers">${s.papers.map(p=>paperHTML(p)).join("")}</ol></details>`;
+}
+function renderDay(){
+  const ag=AGENDA[day], today=ag.date===now.date;
+  prog.innerHTML=ag.rows.map(([s,e,what,sub,hl])=>{
+    const a=toMin(s), b=e?toMin(e):a+90, isNow=today&&now.min>=a&&now.min<b;
+    const t=`<div class="time">${s}${e?"<br>"+e:""}</div>`;
+    if(what==="P"){
+      const ss=sessions.filter(x=>x.day===day&&x.s===s);
+      return `<div class="slot${isNow?" is-now":""}">${t}<div class="parallel"><div class="what">${sub}${isNow?'<span class="now">Now</span>':""}</div>${ss.map(sessHTML).join("")}</div></div>`;
+    }
+    return `<div class="slot plain${hl?" highlight":""}${isNow?" is-now":""}">${t}<div><div class="what">${esc(what)}${isNow?'<span class="now">Now</span>':""}</div>${sub?`<div class="where">${esc(sub)}</div>`:""}</div></div>`;
+  }).join("");
+}
+function renderList(items,emptyMsg,hl){
+  if(!items.length){prog.innerHTML=`<p class="empty">${emptyMsg}</p>`;return;}
+  prog.innerHTML=`<div class="results">${items.map(({s,p})=>`<div class="result"><div><div class="pt">${hl?hl(esc(p.t)):esc(p.t)}</div><div class="pa"><b>${hl?hl(esc(p.p)):esc(p.p)}</b> (${esc(p.a)})${p.co?", "+(hl?hl(esc(p.co)):esc(p.co)):""}</div>
+  <div class="where">${DAYLABEL[s.day]} · ${s.s}–${s.e} · ${hl?hl(esc(s.room)):esc(s.room)} · ${s.code} ${esc(s.title)}</div></div>
+  <button class="starbtn" data-star="${p.id}" aria-pressed="${stars.has(p.id)}" aria-label="Add to my talks">★</button></div>`).join("")}</div>`;
+}
+const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+function render(){
+  const term=q.value.trim(), mine=mineBtn.getAttribute("aria-pressed")==="true";
+  if(term.length>=2){
+    const nt=norm(term);
+    const items=[];sessions.forEach(s=>s.papers.forEach(p=>{if(norm([p.t,p.p,p.co,p.a,s.room,s.title,s.chair,s.code].join(" ")).includes(nt))items.push({s,p})}));
+    const re=new RegExp("("+term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig");
+    renderList(items,"No talks match this search.",x=>x.replace(re,"<mark>$1</mark>"));
+  } else if(mine){
+    const items=[];sessions.forEach(s=>s.papers.forEach(p=>{if(stars.has(p.id))items.push({s,p})}));
+    renderList(items,"No talks saved yet. Tap ★ next to a talk to keep it here.");
+  } else renderDay();
+}
+
+document.querySelectorAll(".days button").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.d===day);b.onclick=()=>{day=b.dataset.d;document.querySelectorAll(".days button").forEach(x=>x.setAttribute("aria-pressed",x===b));q.value="";mineBtn.setAttribute("aria-pressed","false");render();}});
+q.addEventListener("input",render);
+mineBtn.onclick=()=>{mineBtn.setAttribute("aria-pressed",mineBtn.getAttribute("aria-pressed")!=="true");q.value="";render();};
+prog.addEventListener("toggle",e=>{const d=e.target;if(d.matches&&d.matches("details.sess")){d.open?openSet.add(d.dataset.code):openSet.delete(d.dataset.code)}},true);
+document.addEventListener("click",e=>{
+  const st=e.target.closest("[data-star]");
+  if(st){const id=st.dataset.star;stars.has(id)?stars.delete(id):stars.add(id);saveStars();st.setAttribute("aria-pressed",stars.has(id));if(mineBtn.getAttribute("aria-pressed")==="true"&&!q.value)render();return;}
+  const g=e.target.closest("[data-goto]");
+  if(g){const s=sessions.find(x=>x.code===g.dataset.goto);day=s.day;openSet.add(s.code);document.querySelectorAll(".days button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.d===day));q.value="";mineBtn.setAttribute("aria-pressed","false");show("programme");render();const el=prog.querySelector(`[data-code="${s.code}"]`);el&&el.scrollIntoView({block:"start",behavior:"smooth"});return;}
+  const c=e.target.closest("[data-copy]");
+  if(c){const el=document.getElementById(c.dataset.copy);navigator.clipboard?.writeText(el.textContent).then(()=>{c.textContent="Copied"},()=>{getSelection().selectAllChildren(el)})||getSelection().selectAllChildren(el);}
+});
+
+// Sections, linkable with #programme #events #venue #info
+const views=["programme","events","venue","info"];
+function show(v){views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v});document.querySelectorAll("nav.bar button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v));}
+document.querySelectorAll("nav.bar button").forEach(b=>b.onclick=()=>{show(b.dataset.v);try{history.replaceState(null,"","#"+b.dataset.v)}catch(e){};window.scrollTo({top:0})});
+const h=(location.hash||"").slice(1); show(views.includes(h)?h:"programme");
+render();
+</script>
+
+</body>
+</html>
