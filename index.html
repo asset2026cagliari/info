@@ -173,7 +173,7 @@ footer{border-top:1px solid var(--line);padding-block:20px 8px;color:var(--muted
         <div class="label">Rooms</div>
         <p class="sub">Rooms have new codes; the former names are in brackets.</p>
         <p>Plenary sessions: <b>B_0.A Maxi Aula</b> (Aula A)</p>
-        <p>Parallel sessions: <b>A_0.B</b> (Aula 11 Baffi), <b>B_0.B</b> (Aula Magna G. Sotgiu), <b>A_1.C</b> (Aula 13 Baffi), <b>A_1.F</b> (Aula 6 Baffi), <b>A_0.C</b> (Aula 11 bis), <b>A_1.L</b> (Aula 10 bis)</p>
+        <p>Parallel sessions: <b>A_0.B</b> (Aula 11 Baffi), <b>B_0.B</b> (Aula Magna G. Sotgiu), <b>A_1.C</b> (Aula 13 Baffi), <b>A_1.G</b> (Aula 6 Baffi), <b>A_0.C</b> (Aula 11 bis), <b>A_1.L</b> (Aula 10 bis)</p>
       </div>
       <div class="card">
         <div class="label">Getting around</div>
@@ -417,7 +417,7 @@ const AGENDA = {
 };
 const DAYLABEL={thu:"Thu 5 Nov",fri:"Fri 6 Nov",sat:"Sat 7 Nov"};
 
-const ROOMS={"Aula 11 Baffi":"A_0.B","Aula Magna G. Sotgiu":"B_0.B","Aula 13 Baffi":"A_1.C","Aula 6 Baffi":"A_1.F","Aula 11 bis":"A_0.C","Aula 10 bis":"A_1.L"};
+const ROOMS={"Aula 11 Baffi":"A_0.B","Aula Magna G. Sotgiu":"B_0.B","Aula 13 Baffi":"A_1.C","Aula 6 Baffi":"A_1.G","Aula 11 bis":"A_0.C","Aula 10 bis":"A_1.L"};
 const sessions=[]; let cur=null;
 DATA.trim().split("\n").forEach(l=>{
   if(l.startsWith("@")){const [code,day,s,e,room,title,chair,note]=l.slice(1).split("|");cur={code,day,s,e,room:(ROOMS[room]?ROOMS[room]+" ("+room+")":room),title,chair,note:note||"",papers:[]};sessions.push(cur);}
