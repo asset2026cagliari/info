@@ -104,6 +104,13 @@ mark{background:var(--accent-soft);color:inherit;border-radius:2px}
 .copy{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .copy code{font:500 14px var(--f-mono);user-select:all;word-break:break-all}
 .note{font-size:13px;color:var(--muted)}
+
+/* standing notice at the top of every tab */
+.notice{background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.notice .label{color:var(--accent)}
+.notice p{margin:6px 0 0;font-size:14px}
+.notice b{font-weight:600}
+.sess-meta .moved{color:var(--accent);font-weight:600}
 footer{border-top:1px solid var(--line);padding-block:20px 8px;color:var(--muted);font-size:12.5px}
 @media (prefers-reduced-motion:no-preference){details.sess[open] ol.papers{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
 </style>
@@ -128,6 +135,10 @@ footer{border-top:1px solid var(--line);padding-block:20px 8px;color:var(--muted
 </div></nav>
 
 <main class="wrap">
+  <div class="notice" role="status">
+    <div class="label">Room changes · Friday 6 November</div>
+    <p><b>4F Behavioral &amp; Experimental 2</b> (9:30) and <b>6F Political Economy 3</b> (14:30) move to <b>A_0.B</b> (Aula 11 Baffi), swapping with <b>4A Labor &amp; Demography 2</b> and <b>6A Banking &amp; Finance</b>, now in <b>A_1.L</b> (Aula 10 bis). The programme below shows the new rooms.</p>
+  </div>
   <section id="v-programme">
     <div class="controls">
       <div class="days" role="group" aria-label="Day">
@@ -288,7 +299,7 @@ How Commodity Search Frictions Shape Sectoral Allocations|Jaime Alonso-Carrera|U
 Inequality in the Bubble Economy: Who Gains, Who Loses?|Thomas Seegmuller|Aix-Marseille University|Xavier Raurich
 Family Labor Market Decisions and Statistical Gender Discrimination|Marc Teignier|Universitat de Barcelona|David Cuberes, Sevi Rodriguez-Mora, Ludo Visschers
 Demographic Transition, Aggregate Productivity Growth Slowdown, and Structural Change|Vahagn Jerbashian|Universitat de Barcelona|Wilma Ticona-Huanca
-@4A|fri|9:30|11:00|Aula 11 Baffi|Labor & Demography 2|Elias Carroni
+@4A|fri|9:30|11:00|Aula 10 bis|Labor & Demography 2|Elias Carroni|Room changed
 Fertility: the impact of social norms after forced migration|Riccardo Franceschin|Sabancı University|Abdurrahman Aydemir, Giacomo Battiston, Asli Ebru Sanliturk
 Endogenous Fertility and Retirement Age|Marco Delogu|Università di Sassari|Daniele Angelini, William Addessi
 Fertility and inequality within the family|Elias Carroni|Università di Cagliari|Giovanni Prarolo
@@ -308,7 +319,7 @@ To lie or not to lie. This is the question|Luis Corchón|Universidad Carlos III 
 AI Contagion in Social Networks|Olivier Bos|ENS Paris-Saclay|Stefano Bosi
 The Horizontal Geometry of Production Networks|Valerio Dionisi|Università di Milano-Bicocca|
 Tariffs in Networked Markets: Propagation, Welfare and Warfare|Norma Olaizola|University of the Basque Country|Alba Ochoa
-@4F|fri|9:30|11:00|Aula 10 bis|Behavioral & Experimental 2|Ester Manna
+@4F|fri|9:30|11:00|Aula 11 Baffi|Behavioral & Experimental 2|Ester Manna|Room changed
 Conservative Learning Under Rainfall Uncertainty: Evidence from Ethiopian Farmers|Hayat Zouiten|Mohammed VI Polytechnic University|Mohammed Abdellaoui, Thomas Epper, Emmanuel Kemel
 Does AI Mitigate the Gender Gap in Competition? Experimental Evidence|Federico Atzori|Università di Cagliari|Luca Corazzini, Valeria Maggian, Filippo Pavesi, Massimo Scotti
 Project Choice and Social Image Concerns|Ester Manna|Universitat de Barcelona|Claudia Cerrone, Alessandro De Chiara, Theodoros Saroglou
@@ -336,7 +347,7 @@ Rationalizable Conjectures in Dynamic Matching|Antonio Nicolò|Università di Pa
 Industrial Policy and Competition: Equity Injections in the European Airline Industry|Albert Banal-Estanol|Universitat Pompeu Fabra|Christina Stadler, Jo Seldeslachts, Wolfgang Grimme, Sven Maertens
 More Quality Criteria, Fewer Bidders in Scoring Auctions|Pavel Andreyanov|HSE University, Moscow|Andrea Bafundi, Riccardo Camboni, Paola Valbonesi
 Advertising for Dropout Customers|Arthur Fishman|Bar-Ilan University|Ronen Gradwohl, Dmitri Lubensky
-@6A|fri|14:30|16:30|Aula 11 Baffi|Banking & Finance|Dimitris Papageorgiou
+@6A|fri|14:30|16:30|Aula 10 bis|Banking & Finance|Dimitris Papageorgiou|Room changed
 Ex-Ante Risk Timing|Diego Ronchetti|Audencia Business School|Arben Kita, Yue Zhang
 Loan defaults, firms' dynamics and economic activity|Miguel Casares|Universidad Pública de Navarra|Luca Deidda, José-Enrique Galdón-Sánchez
 Financial Structure Cycles|Giommaria Spano|Universidad de Salamanca|Luca Deidda, Bassam Fattouh
@@ -359,7 +370,7 @@ How memory and habits shape economic insecurity|Giorgio Fabbri|Université Greno
 Robust Matching Probabilities: The Bewley Reliability Rule|Lorenzo Bastianello|Università Ca' Foscari Venezia; Université Paris-Panthéon-Assas|José Heleno Faro
 Beyond the Contract: Fairness, Observability, and Discretionary Effort|Anastasia Papadopoulou|University of Bristol|Mathilde L. E. Bechdolf, Simon D. Halliday, Eugene Malthouse
 Agreement and Trade beyond Bayesian Rationality|Vassili Vergopoulos|Université Paris Panthéon-Assas|
-@6F|fri|14:30|16:30|Aula 10 bis|Political Economy 3|Marco Rosso
+@6F|fri|14:30|16:30|Aula 11 Baffi|Political Economy 3|Marco Rosso|Room changed
 Electoral Competition and Women's Party Leadership: The Case of French Municipalities|Mara Vidali|Université de Rennes|Benoit Le Maux, Pauline Mille
 The Rise of Referendums|Andrea Mattozzi|Università di Bologna|Guadalupe Correa-Lopera, Antonio Nicolò
 Fact-Finding in Groups|Boris Ginzburg|Universidad Carlos III de Madrid|Philipp Denter
@@ -445,7 +456,7 @@ function paperHTML(p,hl){
 function sessHTML(s){
   return `<details class="sess${s.code==="3F"?" memorial":""}" data-code="${s.code}"${openSet.has(s.code)?" open":""}>
   <summary><span class="code">${s.code}</span><span class="st">${esc(s.title)}</span><span class="room">${esc(s.room)}</span></summary>
-  <div class="sess-meta">${s.note?esc(s.note)+" · ":""}Chair: ${esc(s.chair)}</div>
+  <div class="sess-meta">${s.note?(s.note==="Room changed"?'<span class="moved">'+esc(s.note)+'</span>':esc(s.note))+" · ":""}Chair: ${esc(s.chair)}</div>
   <ol class="papers">${s.papers.map(p=>paperHTML(p)).join("")}</ol></details>`;
 }
 function renderDay(){
